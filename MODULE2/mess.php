@@ -1,3 +1,16 @@
+<?php 
+session_start();
+include('databaseconnect.php');
+
+
+
+
+
+
+?>
+
+
+
 <!DOCTYPE html >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -33,8 +46,8 @@
                         <span class="red"><img class="nitt" src="img/Nitt-logo.png" /></span>
                     </div>
                     <div class="links span8">
-                        <a class="home" href="" rel="tooltip" data-placement="bottom" data-original-title="Home"></a>
-                        <a class="blog" href="" rel="tooltip" data-placement="bottom" data-original-title="Blog"></a>
+                        <a class="home" href="https://www.nitt.edu" rel="tooltip" data-placement="bottom" data-original-title="Home"></a>
+                        <a class="blog" href="logout.php" rel="tooltip" data-placement="bottom" data-original-title="Blog"></a>
                     </div>
                 </div>
             </div>
@@ -95,26 +108,26 @@
 <th scope="row" colspan="5"><font face="Ebrima" color="#eb4141" size="+1">MESS FEEDBACK</font></th>
     
   </tr>
-<form>
+<form action="mess.php" method="post">
   <tr>
     <th scope="row"><font face="Ebrima" color="#eb4141">Quality of food served</font></th>
-    <td><select><option>select</option><option>very good</option><option>good</option><option>average</option><option>bad</option><option>very bad</option></select></td>
+    <td><select name="quality"><option value="select">select</option><option value="VG">very good</option><option value="G">good</option><option value="AVG"> average</option><option value="B">bad</option><option value="VB">very bad</option></select></td>
     </tr>
     <tr>
         <th><font color="#eb4141" face="Ebrima">Quantity of food served</font></th>
-        <td><select><option>select</option><option>very good</option><option>good</option><option>average</option><option>bad</option><option>very bad</option></select></td>
+        <td><select name="quantity"><option value="select">select</option><option value="VG">very good</option><option value="G">good</option><option value="AVG"> average</option><option value="B">bad</option><option value="VB">very bad</option></select></td></td>
   </tr>
   <tr>
     <th scope="row"><font color="#eb4141" face="Ebrima">Cleanliness and hygine</font></th>
-    <td><select><option>select</option><option>very good</option><option>good</option><option>average</option><option>bad</option><option>very bad</option></select></td>
+    <td><select name="clean"><option value="select">select</option><option value="VG">very good</option><option value="G">good</option><option value="AVG"> average</option><option value="B">bad</option><option value="VB">very bad</option></select></td></td>
     </tr>
     <tr>
         <th><font color="#eb4141" face="Ebrima">Catering service</font></th>
-        <td><select><option>select</option><option>very good</option><option>good</option><option>average</option><option>bad</option><option>very bad</option></select></td>
+        <td><select name="service"><option value="select">select</option><option value="VG">very good</option><option value="G">good</option><option value="AVG"> average</option><option value="B">bad</option><option value="VB">very bad</option></select></td></td>
   </tr>
   <tr>
     <th scope="row"><font color="#eb4141" face="Ebrima">punctuality</font></th>
-    <td><select><option>select</option><option>very good</option><option>good</option><option>average</option><option>bad</option><option>very bad</option></select></td>
+    <td><select name="punctuality"><option value="select">select</option><option value="VG">very good</option><option value="G">good</option><option value="AVG"> average</option><option value="B">bad</option><option value="VB">very bad</option></select></td></td>
    </tr>
 
  
@@ -134,3 +147,16 @@
 </div>
 </body>
 </html>
+<?php
+if(isset($_POST['submit']))
+{
+	$quality=$_POST['quality'];
+	$quantity=$_POST['quantity'];
+	$clean=$_POST['clean'];
+	$service=$_POST['service'];
+	$punctuality=$_POST['punctuality'];
+	$name=$_SESSION['user'];
+	$query="insert into feedback values('$name','$quality','$quantity','$clean','$service','$punctuality')";
+	mysql_query($query)or die(mysql_error());
+}
+?>

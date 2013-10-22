@@ -51,8 +51,8 @@ $row=mysql_fetch_array($res);
                         <span class="red"><img class="nitt" src="img/nitt logo1.png" /></span>
                     </div>
                     <div class="links span8">
-                        <a class="home" href="http://www.nitt.edu" rel="tooltip" data-placement="bottom" data-original-title="NITT Home Page"></a>
-                        <a class="blog" href="logout.php" rel="tooltip" data-placement="bottom" data-original-title=""></a>
+                        <a class="home" href="https://www.nitt.edu" rel="tooltip" data-placement="bottom" data-original-title="Home"></a>
+                        <a class="blog" href="logout.php" rel="tooltip" data-placement="bottom" data-original-title="Blog"></a>
                     </div>
                 </div>
             </div>

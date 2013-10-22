@@ -3,9 +3,10 @@ session_start();
 include('databaseconnect.php');
 
 
-$q="select * from admission_details where rollno=".$_SESSION['user'];
-$res=mysql_query($q);
-$row=mysql_fetch_array($res);
+$q="select * from course_reg where semester=3";
+$res=mysql_query($q) or die(mysql_error());
+$n=mysql_num_rows($res);
+
 
 
 
@@ -30,7 +31,7 @@ $row=mysql_fetch_array($res);
         <script src="bootstrap/js/bootstrap.js"></script>
         
        
-<script>window.jQuery || document.write('<script src="js/jquery-1.7.1.min.js"><\/script>')</script>
+<script>window.jQuery || document.write(<script src="js/jquery-1.7.1.min.js"><\/script>)</script>
 
 <!-- Bootstrap jQuery Plugins, compiled and minified -->
 <script src="js/bootstrap.min.js"></script>
@@ -47,8 +48,8 @@ $row=mysql_fetch_array($res);
                         <span class="red"><img class="nitt" src="img/nitt logo1.png" /></span>
                     </div>
                     <div class="links span8">
-                        <a class="home" href="" rel="tooltip" data-placement="bottom" data-original-title="Home"></a>
-                        <a class="blog" href="" rel="tooltip" data-placement="bottom" data-original-title="Blog"></a>
+                        <a class="home" href="https://www.nitt.edu" rel="tooltip" data-placement="bottom" data-original-title="Home"></a>
+                        <a class="blog" href="logout.php" rel="tooltip" data-placement="bottom" data-original-title="Blog"></a>
                     </div>
                 </div>
             </div>
@@ -96,7 +97,7 @@ $row=mysql_fetch_array($res);
           </li>
         </ul>
         <div class="navbar-search pull-right" >
-                  <?php echo '<font face="Ebrima" color="#eb4141">'.$_SESSION['name'].'</font>'; ?>
+             <?php echo'     <font face="Ebrima" color="#eb4141">'.$_SESSION['name'].'</font>';?>
 
         </div>
       </div><!-- /.nav-collapse -->
@@ -130,74 +131,29 @@ $row=mysql_fetch_array($res);
     <th><font color="#eb4141" face="Ebrima">Semester</font></th>
     
   </tr>
+  <?php
+  for($i=0;$i<$n;$i++)
+{
+	echo '
 <tr>
-<td><form><input type="checkbox" class="checkbox" align="left"></td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td><input type="checkbox" align="left"></td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td><form method="POST" action="registration.php" ><input type="checkbox" name="<?php echo $i; ?>" class="checkbox" value="<?php echo mysql_result($res,$i,"course"); ?>"'.mysql_result($res,$i,"course").' </td>
+<td>'.mysql_result($res,$i,'credits').'</td>
+<td>'.mysql_result($res,$i,'slot').'</td>
+<td>'.mysql_result($res,$i,'accepted').'</td>
+<td>'.mysql_result($res,$i,'remarks').'</td>
+<td>'.mysql_result($res,$i,'semester').'</td>
+</tr>';
+}
+?>
 
-</tr>
-<tr>
-<td><input type="checkbox"></td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-
-</tr>
-<tr>
-<td><input type="checkbox"></td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td><input type="checkbox"></td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td><input type="checkbox"></td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td><input type="checkbox"></td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
  
  
     </table>
 
-<button type="submit" value="submit">submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" value="Print registration slip"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" value="unselect all"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" value="select all"/>
+<button type="submit" value="submit">submit</button>
+
 </form>
-</center>
+</center><br><br>
 </div>
 <div class="navbar-inner">
 <center>
@@ -206,3 +162,12 @@ $row=mysql_fetch_array($res);
 </div>
 </body>
 </html>
+
+<?php
+
+if(isset($_POST['submit']))
+{
+  
+	$w="update academic_details set registered='yes' where rollno=".$_SESSION['user'];
+	mysql_query($w)or die(mysql_error());
+}
